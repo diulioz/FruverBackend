@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { getProductos, getProductosId , postProductos, putProductos, deleteProductos,} from '../Controllers/controller.js';
 // import { getProductos, getProductosId , postProductos, putProductos, deleteProductos,
 //     getUsuarios, getUsuariosId , postUsuarios, putUsuarios, deleteUsuarios,
 //     getPedidos, getPedidosId , postPedidos, putPedidos, deletePedidos,
@@ -13,11 +14,11 @@ router.get('/', (req, res) => {
 });
 
 // // Rutas relacionadas con Productos
-// router.get('/productos', getProductos);
-// router.get('/productos/:idProducto', getProductosId);
-// router.post('/productos', postProductos);
-// router.put('/productos/:idProducto', putProductos);
-// router.delete('/productos/:idProducto', deleteProductos);
+router.get('/productos', getProductos);
+router.get('/productos/:idProducto', getProductosId);
+router.post('/productos', postProductos);
+router.put('/productos/:idProducto', putProductos);
+router.delete('/productos/:idProducto', deleteProductos);
 
 // // Rutas relacionadas con Usuarios
 // router.get('/usuarios', getUsuarios);
