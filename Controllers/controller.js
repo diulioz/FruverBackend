@@ -227,7 +227,81 @@ const deletePedidos = async (req, res) => {
     }
 }
 
+const getDetallesP = async (req,res) =>{
+    try {
+        const detallesP=await Detalles_Pedido.findAll();
+        res.status(200).json(detallesP);
+    } catch (error) {
+        res.status(400).json({mensaje: error});
+    }
+}
+
+const getDetallesId = async (req,res) => {
+    const {idDetalles} = req.params;
+    try {
+        const detalles = await Detalles_Pedido.findByPk(idDetalles);
+        res.status(200).json([detalles]);
+    } catch (error) {
+    res.status(400).json({ mensaje: error });
+    }
+}
+
+const postDetallesP = async (req, res) => {
+    const { Pedido_ID, Producto_ID, Cantidad, Subtotal } = req.body;
+    try {
+        const newDetalle = await Detalles_Pedido.create({
+            Pedido_ID,
+            Producto_ID,
+            Cantidad,
+            Subtotal,
+        });
+        res.status(200).json(newDetalle);
+    } catch (error) {
+        res.status(400).json({ mensaje: error.message });
+    }
+}
+
+const putDetallesP = async (req, res) => {
+    const { idDetalles } = req.params;
+    const { Pedido_ID, Producto_ID, Cantidad, Subtotal } = req.body;
+    try {
+        const oldDetalles = await Detalles_Pedido.findByPk(idDetalles);
+
+        if (!oldDetalles) {
+            return res.status(404).json({ mensaje: "Detalles de Pedido no encontrado" });
+        }
+
+        oldDetalles.Pedido_ID = Pedido_ID;
+        oldDetalles.Producto_ID = Producto_ID;
+        oldDetalles.Cantidad = Cantidad;
+        oldDetalles.Subtotal = Subtotal;
+
+        const modDetalles = await oldDetalles.save();
+        res.status(200).json(modDetalles);
+
+    } catch (error) {
+        res.status(400).json({ mensaje: error.message });
+
+    }
+}
+
+const deleteDetallesP = async (req, res) => {
+    try {
+        const { idDetalles } = req.params;
+        const respuesta = await Detalles_Pedido.destroy({
+            where: {
+                idDetalles: idDetalles,
+            }
+        });
+        res.status(200).json({ mensaje: `Registro con id ${idDetalles} Eliminado ` });
+    } catch (error) {
+        res.status(400).json({ mensaje: `Registro No Eliminado ${error}` });
+    }
+}
+
 
 export {getProductos, getProductosId, postProductos, putProductos, deleteProductos, 
     getUsuarios, getUsuariosId, postUsuarios, putUsuarios, deleteUsuarios, 
-    getPedidos, getPedidosId , postPedidos, putPedidos, deletePedidos}
+    getPedidos, getPedidosId , postPedidos, putPedidos, deletePedidos,
+    getDetallesP, getDetallesId, postDetallesP, putDetallesP, deleteDetallesP
+}

@@ -4,7 +4,7 @@ import { Producto } from "../Models/productos.js";
 import { Pedido } from "../Models/pedidos.js";
 
 const Detalles_Pedido = sequelize.define('Detalles_Pedido', {
-  ID: {
+  idDetalles: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,

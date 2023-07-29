@@ -1,10 +1,8 @@
 import { Router } from 'express';
 import { getProductos, getProductosId , postProductos, putProductos, deleteProductos,
     getUsuarios, getUsuariosId , postUsuarios, putUsuarios, deleteUsuarios,
-    getPedidos, getPedidosId , postPedidos, putPedidos, deletePedidos,} from '../Controllers/controller.js';
-//     
-//     getDetallesP, getDetallesId, postDetallesP, putDetallesP, deleteDetallesP,
-// } from '../Controllers/controller.js';
+    getPedidos, getPedidosId , postPedidos, putPedidos, deletePedidos,
+    getDetallesP, getDetallesId, postDetallesP, putDetallesP, deleteDetallesP,} from '../Controllers/controller.js';
 
 const router = Router();
 
@@ -34,11 +32,11 @@ router.post('/pedidos', postPedidos);
 router.put('/pedidos/:idPedido',putPedidos);
 router.delete('/pedidos/:idPedido',deletePedidos);
 
-// // Rutas relacionadas con Detalles de Pedido
-// router.get('/detallesP', getDetallesP);
-// router.get('/detallesP/:idDetallesP', getDetallesId);
-// router.post('/detallesP', postDetallesP);
-// router.put('/detallesP/:idDetallesP',putDetallesP);
-// router.delete('/detallesP/:idDetallesP',deleteDetallesP);
+// Rutas relacionadas con Detalles de Pedido
+router.get('/detallesP', getDetallesP);
+router.get('/detallesP/:idDetalles', getDetallesId);
+router.post('/detallesP', postDetallesP);
+router.put('/detallesP/:idDetalles',putDetallesP);
+router.delete('/detallesP/:idDetalles',deleteDetallesP);
 
 export default router;
