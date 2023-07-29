@@ -1,5 +1,7 @@
 import { Producto } from "../Models/productos.js";
 import { Usuario } from "../Models/usuarios.js";
+import { Pedido } from "../Models/pedidos.js";
+import { Detalles_Pedido } from "../Models/detalles_pedido.js";
 
 const getProductos = async (req,res) =>{
     try {
@@ -153,5 +155,79 @@ const deleteUsuarios = async (req, res) => {
     }
 }
 
+const getPedidos = async (req,res) =>{
+    try {
+        const pedidos=await Pedido.findAll();
+        res.status(200).json(pedidos);
+    } catch (error) {
+        res.status(400).json({mensaje: error});
+    }
+}
 
-export {getProductos, getProductosId, postProductos, putProductos, deleteProductos, getUsuarios, getUsuariosId, postUsuarios, putUsuarios, deleteUsuarios}
+const getPedidosId = async (req,res) => {
+    const {idPedido} = req.params;
+    try {
+        const pedido = await Pedido.findByPk(idPedido);
+        res.status(200).json([pedido]);
+    } catch (error) {
+    res.status(400).json({ mensaje: error });
+    }
+}
+
+const postPedidos= async (req, res) => {
+    const { Usuario_ID, Fecha, Confirmado, Total } = req.body;
+    try {
+        const newPedido = await Pedido.create({
+            Usuario_ID,
+            Fecha,
+            Confirmado,
+            Total,
+        });
+        res.status(200).json(newPedido);
+    } catch (error) {
+        res.status(400).json({ mensaje: error.message });
+    }
+}
+
+const putPedidos = async (req, res) => {
+    const { idPedido } = req.params;
+    const { Usuario_ID, Fecha, Confirmado, Total } = req.body;
+    try {
+        const oldPedido = await Pedido.findByPk(idPedido);
+
+        if (!oldPedido) {
+            return res.status(404).json({ mensaje: "Pedido no encontrado" });
+        }
+
+        oldPedido.Usuario_ID = Usuario_ID;
+        oldPedido.Fecha = Fecha;
+        oldPedido.Confirmado = Confirmado;
+        oldPedido.Total = Total;
+
+        const modPedido = await oldPedido.save();
+        res.status(200).json(modPedido);
+
+    } catch (error) {
+        res.status(400).json({ mensaje: error.message });
+
+    }
+}
+
+const deletePedidos = async (req, res) => {
+    try {
+        const { idPedido } = req.params;
+        const respuesta = await Pedido.destroy({
+            where: {
+                idPedido: idPedido,
+            }
+        });
+        res.status(200).json({ mensaje: `Registro con id ${idPedido} Eliminado ` });
+    } catch (error) {
+        res.status(400).json({ mensaje: `Registro No Eliminado ${error}` });
+    }
+}
+
+
+export {getProductos, getProductosId, postProductos, putProductos, deleteProductos, 
+    getUsuarios, getUsuariosId, postUsuarios, putUsuarios, deleteUsuarios, 
+    getPedidos, getPedidosId , postPedidos, putPedidos, deletePedidos}

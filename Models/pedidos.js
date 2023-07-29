@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../Database/database.js';
+import { Usuario } from "../Models/usuarios.js";
 
 const Pedido = sequelize.define('Pedido', {
   idPedido: {
