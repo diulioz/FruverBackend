@@ -1,6 +1,6 @@
 import { Producto } from "../Models/productos.js";
+import { Usuario } from "../Models/usuarios.js";
 
-//Cuando hago esto puedo modificar las rutas
 const getProductos = async (req,res) =>{
     try {
         const productos=await Producto.findAll();
@@ -75,6 +75,83 @@ const deleteProductos = async (req, res) => {
     }
 }
 
+const getUsuarios = async (req,res) =>{
+    try {
+        const usuarios=await Usuario.findAll();
+        res.status(200).json(usuarios);
+    } catch (error) {
+        res.status(400).json({mensaje: error});
+    }
+}
+
+const getUsuariosId = async (req,res) => {
+    const {idUsuario} = req.params;
+    try {
+        const usuario = await Usuario.findByPk(idUsuario);
+        res.status(200).json([usuario]);
+    } catch (error) {
+    res.status(400).json({ mensaje: error });
+    }
+}
+
+const postUsuarios = async (req, res) => {
+    const { idUsuario, Nombre, Email, Contrasena, Rol, Direccion, Ciudad, Telefono } = req.body;
+    try {
+        const newUsuario = await Usuario.create({
+            idUsuario,
+            Nombre,
+            Email,
+            Contrasena,
+            Rol,
+            Direccion,
+            Ciudad,
+            Telefono,
+        });
+        res.status(200).json(newUsuario);
+    } catch (error) {
+        res.status(400).json({ mensaje: error.message });
+    }
+}
+
+const putUsuarios = async (req, res) => {
+    const { idUsuario } = req.params;
+    const { Nombre, Email, Contrasena, Rol, Direccion, Ciudad, Telefono } = req.body;
+    try {
+        const oldUsuario = await Usuario.findByPk(idUsuario);
+
+        if (!oldUsuario) {
+            return res.status(404).json({ mensaje: "Usuario no encontrado" });
+        }
+        oldUsuario.Nombre = Nombre;
+        oldUsuario.Email = Email;
+        oldUsuario.Contrasena = Contrasena;
+        oldUsuario.Rol = Rol;
+        oldUsuario.Direccion = Direccion;
+        oldUsuario.Ciudad = Ciudad;
+        oldUsuario.Telefono = Telefono;
+
+        const modUsuario = await oldUsuario.save();
+        res.status(200).json(modUsuario);
+
+    } catch (error) {
+        res.status(400).json({ mensaje: error.message });
+
+    }
+}
+
+const deleteUsuarios = async (req, res) => {
+    try {
+        const { idUsuario } = req.params;
+        const respuesta = await Usuario.destroy({
+            where: {
+                idUsuario: idUsuario,
+            }
+        });
+        res.status(200).json({ mensaje: `Registro con id ${idUsuario} Eliminado ` });
+    } catch (error) {
+        res.status(400).json({ mensaje: `Registro No Eliminado ${error}` });
+    }
+}
 
 
-export {getProductos, getProductosId, postProductos, putProductos, deleteProductos}
+export {getProductos, getProductosId, postProductos, putProductos, deleteProductos, getUsuarios, getUsuariosId, postUsuarios, putUsuarios, deleteUsuarios}

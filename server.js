@@ -1,7 +1,6 @@
 import express from 'express';
 import router from './Routes/routes.js';
 import { sequelize } from './Database/database.js';
-// import { Producto } from './Models/productos.js';
 
 //Crear Instancia
 const app = express();

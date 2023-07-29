@@ -1,7 +1,6 @@
 import { Router } from 'express';
-import { getProductos, getProductosId , postProductos, putProductos, deleteProductos,} from '../Controllers/controller.js';
-// import { getProductos, getProductosId , postProductos, putProductos, deleteProductos,
-//     getUsuarios, getUsuariosId , postUsuarios, putUsuarios, deleteUsuarios,
+import { getProductos, getProductosId , postProductos, putProductos, deleteProductos,
+    getUsuarios, getUsuariosId , postUsuarios, putUsuarios, deleteUsuarios,} from '../Controllers/controller.js';
 //     getPedidos, getPedidosId , postPedidos, putPedidos, deletePedidos,
 //     getDetallesP, getDetallesId, postDetallesP, putDetallesP, deleteDetallesP,
 // } from '../Controllers/controller.js';
@@ -13,19 +12,19 @@ router.get('/', (req, res) => {
     res.send("GET Pagina Principal Express");
 });
 
-// // Rutas relacionadas con Productos
+// Rutas relacionadas con Productos
 router.get('/productos', getProductos);
 router.get('/productos/:idProducto', getProductosId);
 router.post('/productos', postProductos);
 router.put('/productos/:idProducto', putProductos);
 router.delete('/productos/:idProducto', deleteProductos);
 
-// // Rutas relacionadas con Usuarios
-// router.get('/usuarios', getUsuarios);
-// router.get('/usuarios/:idUsuario', getUsuariosId);
-// router.post('/usuarios', postUsuarios);
-// router.put('/usuarios/:idUsuario',putUsuarios);
-// router.delete('/usuarios/:idUsuario',deleteUsuarios);
+// Rutas relacionadas con Usuarios
+router.get('/usuarios', getUsuarios);
+router.get('/usuarios/:idUsuario', getUsuariosId);
+router.post('/usuarios', postUsuarios);
+router.put('/usuarios/:idUsuario',putUsuarios);
+router.delete('/usuarios/:idUsuario',deleteUsuarios);
 
 // // Rutas relacionadas con Pedidos
 // router.get('/pedidos', getPedidos);
