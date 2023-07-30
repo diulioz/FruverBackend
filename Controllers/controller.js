@@ -41,7 +41,7 @@ const postProductos = async (req, res) => {
 
 const putProductos = async (req, res) => {
     const { idProducto } = req.params;
-    const { Nombre, Descripcion, Precio, Cantidad_Disponible, Imagen } = req.body;
+    const { Nombre, Descripcion, Precio, Cantidad_Disponible, Imagen, Categoria } = req.body;
     try {
         const oldProducto = await Producto.findByPk(idProducto);
 
@@ -54,6 +54,7 @@ const putProductos = async (req, res) => {
         oldProducto.Precio = Precio;
         oldProducto.Cantidad_Disponible = Cantidad_Disponible;
         oldProducto.Imagen = Imagen;
+        oldProducto.Categoria = Categoria;
 
         const modProducto = await oldProducto.save();
         res.status(200).json(modProducto);
