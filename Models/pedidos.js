@@ -13,7 +13,7 @@ const Pedido = sequelize.define('Pedido', {
     allowNull: false,
   },
   Confirmado: {
-    type: DataTypes.BOOLEAN,
+    type: DataTypes.INTEGER,
     allowNull: false,
     defaultValue: false,
   },
