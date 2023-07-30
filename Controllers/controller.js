@@ -23,7 +23,7 @@ const getProductosId = async (req,res) => {
 }
 
 const postProductos = async (req, res) => {
-    const { Nombre, Descripcion, Precio, Cantidad_Disponible, Imagen } = req.body;
+    const { Nombre, Descripcion, Precio, Cantidad_Disponible, Imagen, Categoria } = req.body;
     try {
         const newProducto = await Producto.create({
             Nombre,
@@ -31,6 +31,7 @@ const postProductos = async (req, res) => {
             Precio,
             Cantidad_Disponible,
             Imagen,
+            Categoria,
         });
         res.status(200).json(newProducto);
     } catch (error) {

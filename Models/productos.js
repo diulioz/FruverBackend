@@ -26,6 +26,9 @@ const Producto = sequelize.define('Producto', {
   Imagen: {
     type: DataTypes.STRING,
   },
+  Categoria: {
+    type: DataTypes.STRING,
+  },
 },
 {
     timestamps:false,
