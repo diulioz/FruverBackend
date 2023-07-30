@@ -1,11 +1,13 @@
 import express from 'express';
 import router from './Routes/routes.js';
 import { sequelize } from './Database/database.js';
+import cors from 'cors';
 
 //Crear Instancia
 const app = express();
 
 //Montando el enrutador en la app principal
+app.use(cors());
 app.use(express.json());
 app.use(router);
 app.set('port',3000);
