@@ -304,12 +304,13 @@ const deleteDetallesP = async (req, res) => {
 
 const enviarCorreo = async (req,res) => {
     const { email } = req.params
+    const { subject, text } = req.body;
     // Opciones del correo electrónico
     const result = await transporter.sendMail({
       from: `Don Fruver "pruebascorreopersonal@outlook.com"`,
       to: email,
-      subject: "Correo",
-      text: "contenido",
+      subject: subject,
+      text: text,
     })
     console.log({result})
     res.status(200).json({ok: true, message: "Envido con exito"})
