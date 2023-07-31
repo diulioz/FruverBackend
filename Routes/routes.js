@@ -3,7 +3,7 @@ import { Router } from 'express';
 import { getProductos, getProductosId , postProductos, putProductos, deleteProductos,
     getUsuarios, getUsuariosId , postUsuarios, putUsuarios, deleteUsuarios,
     getPedidos, getPedidosId , postPedidos, putPedidos, deletePedidos,
-    getDetallesP, getDetallesId, postDetallesP, putDetallesP, deleteDetallesP,enviarCorreo} from '../Controllers/controller.js';
+    getDetallesP, getDetallesId, postDetallesP, putDetallesP, deleteDetallesP,enviarCorreo, validacionUsuarios} from '../Controllers/controller.js';
 
 const router = Router();
 
@@ -40,6 +40,12 @@ router.post('/detallesP', postDetallesP);
 router.put('/detallesP/:idDetalles',putDetallesP);
 router.delete('/detallesP/:idDetalles',deleteDetallesP);
 
+// Ruta relacionadas con Envio de correo
 router.post('/correo/:email', enviarCorreo);
+
+// Rutas relacionadas con la Autenticación
+router.post('/singup', postUsuarios);
+router.post('/singin', validacionUsuarios);
+
 
 export default router;

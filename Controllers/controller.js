@@ -3,6 +3,8 @@ import { Usuario } from "../Models/usuarios.js";
 import { Pedido } from "../Models/pedidos.js";
 import { Detalles_Pedido } from "../Models/detalles_pedido.js";
 import { transporter } from "../helpers/mailer.js";
+import jwt from 'jsonwebtoken';
+
 
 const getProductos = async (req,res) =>{
     try {
@@ -112,7 +114,9 @@ const postUsuarios = async (req, res) => {
             Ciudad,
             Telefono,
         });
-        res.status(200).json(newUsuario);
+        
+        const token = jwt.sign({_id:newUsuario.idUsuario}, 'secretkey')
+        res.status(200).json({usuario: newUsuario, token});
     } catch (error) {
         res.status(400).json({ mensaje: error.message });
     }
@@ -316,8 +320,22 @@ const enviarCorreo = async (req,res) => {
     res.status(200).json({ok: true, message: "Envido con exito"})
   };
 
+  const validacionUsuarios = async (req, res) => {
+    const { idUsuario, Contrasena } = req.body;
+    const user = await Usuario.findOne({
+      where: { idUsuario } // Especifica las condiciones de búsqueda dentro de un objeto 'where'
+    });
+  
+    if (!user) return res.status(401).send("El usuario no existe");
+    if (user.Contrasena !== Contrasena) return res.status(401).send("Contraseña incorrecta");
+  
+    const token = jwt.sign({ _id: user.idUsuario }, 'secretkey'); // Debes usar 'user' en lugar de 'User'
+    res.status(200).json({ token });
+  };
+  
+
 export {getProductos, getProductosId, postProductos, putProductos, deleteProductos, 
     getUsuarios, getUsuariosId, postUsuarios, putUsuarios, deleteUsuarios, 
     getPedidos, getPedidosId , postPedidos, putPedidos, deletePedidos,
-    getDetallesP, getDetallesId, postDetallesP, putDetallesP, deleteDetallesP, enviarCorreo
+    getDetallesP, getDetallesId, postDetallesP, putDetallesP, deleteDetallesP, enviarCorreo, validacionUsuarios
 }
