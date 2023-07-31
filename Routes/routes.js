@@ -44,8 +44,8 @@ router.delete('/detallesP/:idDetalles',deleteDetallesP);
 router.post('/correo/:email', enviarCorreo);
 
 // Rutas relacionadas con la Autenticación
-router.post('/singup', postUsuarios);
-router.post('/singin', validacionUsuarios);
+router.post('/singin', postUsuarios);
+router.post('/singup', validacionUsuarios);
 
 
 export default router;
