@@ -2,6 +2,7 @@ import { Producto } from "../Models/productos.js";
 import { Usuario } from "../Models/usuarios.js";
 import { Pedido } from "../Models/pedidos.js";
 import { Detalles_Pedido } from "../Models/detalles_pedido.js";
+import { transporter } from "../helpers/mailer.js";
 
 const getProductos = async (req,res) =>{
     try {
@@ -301,9 +302,21 @@ const deleteDetallesP = async (req, res) => {
     }
 }
 
+const enviarCorreo = async (req,res) => {
+    const { email } = req.params
+    // Opciones del correo electrónico
+    const result = await transporter.sendMail({
+      from: `Don Fruver "pruebascorreopersonal@outlook.com"`,
+      to: email,
+      subject: "Correo",
+      text: "contenido",
+    })
+    console.log({result})
+    res.status(200).json({ok: true, message: "Envido con exito"})
+  };
 
 export {getProductos, getProductosId, postProductos, putProductos, deleteProductos, 
     getUsuarios, getUsuariosId, postUsuarios, putUsuarios, deleteUsuarios, 
     getPedidos, getPedidosId , postPedidos, putPedidos, deletePedidos,
-    getDetallesP, getDetallesId, postDetallesP, putDetallesP, deleteDetallesP
+    getDetallesP, getDetallesId, postDetallesP, putDetallesP, deleteDetallesP, enviarCorreo
 }

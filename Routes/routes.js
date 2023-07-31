@@ -1,8 +1,9 @@
 import { Router } from 'express';
+
 import { getProductos, getProductosId , postProductos, putProductos, deleteProductos,
     getUsuarios, getUsuariosId , postUsuarios, putUsuarios, deleteUsuarios,
     getPedidos, getPedidosId , postPedidos, putPedidos, deletePedidos,
-    getDetallesP, getDetallesId, postDetallesP, putDetallesP, deleteDetallesP,} from '../Controllers/controller.js';
+    getDetallesP, getDetallesId, postDetallesP, putDetallesP, deleteDetallesP,enviarCorreo} from '../Controllers/controller.js';
 
 const router = Router();
 
@@ -38,5 +39,7 @@ router.get('/detallesP/:idDetalles', getDetallesId);
 router.post('/detallesP', postDetallesP);
 router.put('/detallesP/:idDetalles',putDetallesP);
 router.delete('/detallesP/:idDetalles',deleteDetallesP);
+
+router.post('/correo/:email', enviarCorreo);
 
 export default router;
