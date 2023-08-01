@@ -101,6 +101,23 @@ const getUsuariosId = async (req,res) => {
     }
 }
 
+const getUsuarioRol = async (req, res) => {
+    const { idUsuario } = req.params;
+    try {
+        const usuario = await Usuario.findByPk(idUsuario, {
+            attributes: ['Rol'], // Especificamos que solo queremos el campo 'Rol'
+        });
+
+        if (!usuario) {
+            return res.status(404).json({ mensaje: "Usuario no encontrado" });
+        }
+
+        res.status(200).json({ rol: usuario.Rol });
+    } catch (error) {
+        res.status(400).json({ mensaje: error });
+    }
+};
+
 const postUsuarios = async (req, res) => {
     const { idUsuario, Nombre, Email, Contrasena, Rol, Direccion, Ciudad, Telefono } = req.body;
     try {
@@ -337,5 +354,5 @@ const enviarCorreo = async (req,res) => {
 export {getProductos, getProductosId, postProductos, putProductos, deleteProductos, 
     getUsuarios, getUsuariosId, postUsuarios, putUsuarios, deleteUsuarios, 
     getPedidos, getPedidosId , postPedidos, putPedidos, deletePedidos,
-    getDetallesP, getDetallesId, postDetallesP, putDetallesP, deleteDetallesP, enviarCorreo, validacionUsuarios
+    getDetallesP, getDetallesId, postDetallesP, putDetallesP, deleteDetallesP, enviarCorreo, validacionUsuarios, getUsuarioRol
 }
